@@ -109,13 +109,21 @@ resource "azapi_update_resource" "approval" {
   })
 }*/
 
+/*
 resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "linked_adls" {
   name                = "linked_adls"
   data_factory_id     = azurerm_data_factory.adf.id
   account_name        = "example"
   tenant_id           = "11111111-1111-1111-1111-111111111111"
   service_principal_id = data.azurerm_client_config.current.client_id
-  service_principal_key = azurerm_data_factory_linked_service_key_vault.adf_key_vault.get_secret("example_secret_name")
   url = ""
 }
 
+resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "example" {
+name                  = "linked_adls"
+data_factory_id       = azurerm_data_factory.adf.id
+service_principal_id  = data.azurerm_client_config.current.client_id
+service_principal_key = "exampleKey"
+tenant                = "11111111-1111-1111-1111-111111111111"
+url                   = "https://datalakestoragegen2"
+}*/
