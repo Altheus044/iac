@@ -111,22 +111,21 @@ resource "azapi_update_resource" "approval" {
   })
 }*/
 
-/*
-resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "linked_adls" {
+/*resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "linked_adls" {
   name                = "linked_adls"
   data_factory_id     = azurerm_data_factory.adf.id
   account_name        = "example"
-  tenant_id           = "11111111-1111-1111-1111-111111111111"
+  tenant_id           = var.TF_VAR_AZURE_TENANT
   service_principal_id = data.azurerm_client_config.current.client_id
   url = ""
-}
+}*/
 
 resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "example" {
-name                  = "linked_adls"
-data_factory_id       = azurerm_data_factory.adf.id
-service_principal_id  = data.azurerm_client_config.current.client_id
-service_principal_key = "exampleKey"
-tenant                = "11111111-1111-1111-1111-111111111111"
-url                   = "https://datalakestoragegen2"
-}*/
+  count                = var.adf_deploy_flag ? 1 : 0
+  name                 = "linked_adls"
+  data_factory_id      = azurerm_data_factory.adf[0].id
+  service_principal_id = data.azurerm_client_config.current.client_id
+  tenant               = var.TF_VAR_AZURE_TENANT
+  url                  = "https://${var.adls_name}dfs.core.windows.net/"
+}
 

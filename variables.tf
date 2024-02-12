@@ -31,6 +31,11 @@ variable "location" {
   default     = "East US"
   type        = string
 }
+
+variable "TF_VAR_AZURE_TENANT" {
+  description = "Azure Tenant"
+  type        = string
+}
 # -----------------------------------------------------------------------------
 # Variables ADLS
 # -----------------------------------------------------------------------------
