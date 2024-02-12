@@ -58,7 +58,7 @@ resource "azurerm_resource_group" "rg_adf" {
 }
 
 resource "azurerm_key_vault" "adf_key_vault" {
-  count    = var.adf_deploy_flag ? 1 : 0
+  count               = var.adf_deploy_flag ? 1 : 0
   name                = var.kv_adf_name
   location            = azurerm_resource_group.rg_adf[0].location
   resource_group_name = azurerm_resource_group.rg_adf[0].name
@@ -73,7 +73,7 @@ resource "azurerm_data_factory" "adf" {
   resource_group_name = azurerm_resource_group.rg_adf[0].name
 }
 resource "azurerm_data_factory_linked_service_key_vault" "linked_adf_key_vault" {
-  count    = var.adf_deploy_flag ? 1 : 0
+  count           = var.adf_deploy_flag ? 1 : 0
   name            = "linked-adf_key_vault"
   data_factory_id = azurerm_data_factory.adf[0].id
   key_vault_id    = azurerm_key_vault.adf_key_vault[0].id
