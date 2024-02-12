@@ -73,6 +73,11 @@ variable "adf_name" {
   type        = string
 }
 
+variable "kv_adf_name" {
+  description = "Resource Group Name"
+  default     = "kv-adf-noprod-eastus-001"
+  type        = string
+}
 variable "adf_deploy_flag" {
   description = "Flag to control deployment."
   type        = bool
