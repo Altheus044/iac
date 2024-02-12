@@ -124,7 +124,6 @@ resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "example" 
   count                = var.adf_deploy_flag ? 1 : 0
   name                 = "linked_adls"
   data_factory_id      = azurerm_data_factory.adf[0].id
-  service_principal_id = data.azurerm_client_config.current.client_id
   tenant               = var.az_tenant
   url                  = "https://${var.adls_name}dfs.core.windows.net/"
 }
