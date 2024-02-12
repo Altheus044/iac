@@ -58,9 +58,10 @@ resource "azurerm_resource_group" "rg_adf" {
 }
 
 resource "azurerm_key_vault" "adf_key_vault" {
-  name                = "example"
-  location            = azurerm_resource_group.rg_adf.location
-  resource_group_name = azurerm_resource_group.rg_adf.name
+  count    = var.adf_deploy_flag ? 1 : 0
+  name                = var.kv_adf_name
+  location            = azurerm_resource_group.rg_adf[0].location
+  resource_group_name = azurerm_resource_group.rg_adf[0].name
   tenant_id           = data.azurerm_client_config.current.tenant_id
   sku_name            = "standard"
 }
@@ -71,10 +72,11 @@ resource "azurerm_data_factory" "adf" {
   location            = azurerm_resource_group.rg_adf[0].location
   resource_group_name = azurerm_resource_group.rg_adf[0].name
 }
-resource "azurerm_data_factory_linked_service_key_vault" "adf_key_vault" {
-  name            = "adf_key_vault"
-  data_factory_id = azurerm_data_factory.adf.id
-  key_vault_id    = azurerm_key_vault.adf_key_vault.id
+resource "azurerm_data_factory_linked_service_key_vault" "linked_adf_key_vault" {
+  count    = var.adf_deploy_flag ? 1 : 0
+  name            = "linked-adf_key_vault"
+  data_factory_id = azurerm_data_factory.adf[0].id
+  key_vault_id    = azurerm_key_vault.adf_key_vault[0].id
 }
 
 /*# Retrieve the storage account details, including the private endpoint connections
