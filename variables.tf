@@ -32,9 +32,10 @@ variable "location" {
   type        = string
 }
 
-variable "TF_VAR_AZURE_TENANT" {
+variable "az_tenant" {
   description = "Azure Tenant"
   type        = string
+  sensitive   = true
 }
 # -----------------------------------------------------------------------------
 # Variables ADLS
