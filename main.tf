@@ -58,12 +58,39 @@ resource "azurerm_resource_group" "rg_adf" {
 }
 
 /*resource "azurerm_key_vault" "adf_key_vault" {
-  count               = var.adf_deploy_flag ? 1 : 0
-  name                = var.kv_adf_name
-  location            = azurerm_resource_group.rg_adf[0].location
-  resource_group_name = azurerm_resource_group.rg_adf[0].name
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  sku_name            = "standard"
+  count                    = var.avk_deploy_flag ? 1 : 0
+  name                     = var.kv_adf_name
+  location                 = azurerm_resource_group.rg_adf[0].location
+  resource_group_name      = azurerm_resource_group.rg_adf[0].name
+  tenant_id                = data.azurerm_client_config.current.tenant_id
+  sku_name                 = "standard"
+  soft_delete_enabled      = true
+  purge_protection_enabled = false
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = var.az_service_principal_object_id
+
+    key_permissions = [
+      "get",
+    ]
+
+    secret_permissions = [
+      "get",
+      "set",
+      "delete",
+      "list",
+    ]
+
+    storage_permissions = [
+      "get",
+    ]
+  }
+}
+
+resource "azurerm_key_vault_secret" "adf_vk_secret" {
+  name         = "AdfKvSecret"
+  value        = var.kv_value
+  key_vault_id = azurerm_key_vault.adf_key_vault.id
 }*/
 
 resource "azurerm_data_factory" "adf" {

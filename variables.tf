@@ -37,6 +37,19 @@ variable "az_tenant" {
   type        = string
   sensitive   = true
 }
+
+variable "az_service_principal_object_id" {
+  description = "Azure principal object id"
+  type        = string
+  sensitive   = true
+}
+
+variable "kv_value" {
+  description = "Azure kv value"
+  type        = string
+  sensitive   = true
+}
+
 # -----------------------------------------------------------------------------
 # Variables ADLS
 # -----------------------------------------------------------------------------
@@ -87,9 +100,17 @@ variable "kv_adf_name" {
 variable "adf_deploy_flag" {
   description = "Flag to control deployment."
   type        = bool
-  default     = true
+  default     = false
 }
 
+# -----------------------------------------------------------------------------
+# Variables KV
+# -----------------------------------------------------------------------------
+variable "avk_deploy_flag" {
+  description = "Flag to control deployment."
+  type        = bool
+  default     = false
+}
 
 # -----------------------------------------------------------------------------
 # Tag Variables
