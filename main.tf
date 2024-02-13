@@ -57,14 +57,14 @@ resource "azurerm_resource_group" "rg_adf" {
   location = var.location
 }
 
-resource "azurerm_key_vault" "adf_key_vault" {
+/*resource "azurerm_key_vault" "adf_key_vault" {
   count               = var.adf_deploy_flag ? 1 : 0
   name                = var.kv_adf_name
   location            = azurerm_resource_group.rg_adf[0].location
   resource_group_name = azurerm_resource_group.rg_adf[0].name
   tenant_id           = data.azurerm_client_config.current.tenant_id
   sku_name            = "standard"
-}
+}*/
 
 resource "azurerm_data_factory" "adf" {
   count               = var.adf_deploy_flag ? 1 : 0
@@ -72,12 +72,12 @@ resource "azurerm_data_factory" "adf" {
   location            = azurerm_resource_group.rg_adf[0].location
   resource_group_name = azurerm_resource_group.rg_adf[0].name
 }
-resource "azurerm_data_factory_linked_service_key_vault" "linked_adf_key_vault" {
+/*resource "azurerm_data_factory_linked_service_key_vault" "linked_adf_key_vault" {
   count           = var.adf_deploy_flag ? 1 : 0
   name            = "linked-adf_key_vault"
   data_factory_id = azurerm_data_factory.adf[0].id
   key_vault_id    = azurerm_key_vault.adf_key_vault[0].id
-}
+}*/
 
 /*# Retrieve the storage account details, including the private endpoint connections
 data "azapi_resource" "example_storage" {
@@ -121,9 +121,10 @@ resource "azapi_update_resource" "approval" {
 }*/
 
 resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "example" {
-  count           = var.adf_deploy_flag ? 1 : 0
-  name            = "linked_adls"
-  data_factory_id = azurerm_data_factory.adf[0].id
-  tenant          = var.az_tenant
-  url             = "https://${var.adls_name}dfs.core.windows.net/"
+  count                = var.adf_deploy_flag ? 1 : 0
+  name                 = "linked_adls"
+  data_factory_id      = azurerm_data_factory.adf[0].id
+  resource_group_name  = azurerm_resource_group.rg_adf.name
+  url                  = "https://${var.adls_name}dfs.core.windows.net"
+  use_managed_identity = true
 }
