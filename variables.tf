@@ -28,7 +28,7 @@ variable "key_backend_prod" {
 
 variable "location" {
   description = "Azure location"
-  default     = "East US"
+  default     = "Central US"
   type        = string
 }
 
