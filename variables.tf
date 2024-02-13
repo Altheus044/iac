@@ -87,7 +87,7 @@ variable "kv_adf_name" {
 variable "adf_deploy_flag" {
   description = "Flag to control deployment."
   type        = bool
-  default     = false
+  default     = true
 }
 
 

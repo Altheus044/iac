@@ -122,7 +122,7 @@ resource "azapi_update_resource" "approval" {
 
 resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "example" {
   count                = var.adf_deploy_flag ? 1 : 0
-  name                 = "linked_adls"
+  name                 = "linked_adf_adls"
   data_factory_id      = azurerm_data_factory.adf[0].id
   url                  = "https://${var.adls_name}dfs.core.windows.net"
   use_managed_identity = true
