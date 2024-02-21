@@ -62,7 +62,7 @@ variable "adls_resource_group_name" {
 variable "adls_deploy_flag" {
   description = "Flag to control deployment."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "st_adls_name" {
